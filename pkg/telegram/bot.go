@@ -5,13 +5,16 @@ import (
 	"database/sql"
 	"log"
 	"telebot/config"
+	"telebot/pkg/models"
 	"time"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+
+	_ "github.com/lib/pq"
 )
 
 type Bot struct {
-	// models
+	models.Models
 	Bot *tgbotapi.BotAPI
 }
 
@@ -23,8 +26,13 @@ func NewBot(cfg *config.Config) (*Bot, error) {
 	if cfg.Log.Level == "DEBUG" {
 		bot.Debug = true
 	}
+	db, err := openDB(cfg)
+	if err != nil {
+		return nil, err
+	}
 	return &Bot{
-		Bot: bot,
+		Bot:    bot,
+		Models: *models.NewModels(db),
 	}, nil
 }
 

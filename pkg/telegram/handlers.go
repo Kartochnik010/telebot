@@ -7,6 +7,11 @@ func (b *Bot) handleMessage(message *tgbotapi.Message) error {
 	return nil
 }
 
+func (b *Bot) handleCommand(message *tgbotapi.Message) error {
+	b.Bot.Send(tgbotapi.NewMessage(int64(message.Chat.ID), message.Text))
+	return nil
+}
+
 // func (b *Bot) handleError(chatID int64, err error) error {
 // 	_, e = b.Bot.Send(tgbotapi.NewMessage(chatID, err.Error()))
 // 	if err != nil {

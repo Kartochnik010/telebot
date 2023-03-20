@@ -12,6 +12,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println(cfg)
 	bot, err := telegram.NewBot(cfg)
 	if err != nil {
 		log.Fatal(err)
